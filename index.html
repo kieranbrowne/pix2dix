@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>pix2dix</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700" rel="stylesheet">
+  <style type="text/css" media="all">
+    body {
+      font-family: 'Roboto Mono', monospace;
+      margin: 0;
+        background-image: url('wallpaper.svg');
+        background-size: 160px 112px ;
+    }
+
+   div.whats-this {
+       position: fixed;
+       right: 16px;
+       bottom: 8px;
+   }
+
+
+    .container {
+      padding: 16px;
+      width:70vw;
+      box-sizing: border-box;
+      margin: 0 auto;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      height: 100%;
+      background: white;
+    }
+
+    h1 {
+        /* text-align: center; */
+      font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 16px;
+    }
+
+   h4 {
+       color: grey;
+       line-height: 16px;
+       font-size: 12px;
+       font-weight: 400;
+       margin-bottom: 0;
+        margin-top: 8px;
+   }
+    .draw-box {
+      border: 1px solid #ccc;
+        /* height: 500px; */
+        margin-top: 16px;
+    }
+
+   .draw-box .sizer {
+       padding-bottom: 100%;
+   }
+
+   .draw-container {
+        width: 500px;
+        margin: 0 auto;
+   }
+
+   button {
+       appearance: none;
+       background: black;
+       color: white;
+       line-height: 32px;
+       border: none;
+       border: 1px solid black;
+       font-weight: bold;
+       letter-spacing: 2px;
+       padding: 0 16px;
+       margin-top: 16px;
+       cursor: pointer;
+       text-transform: capitalize;
+   }
+
+   button.light {
+       background: white;
+       color: black;
+       border: 1px solid black;
+       box-sizing: border-box;
+   }
+
+
+   @media (max-width: 780px) {
+    .container {
+      padding: 16px;
+      width:100vw;
+        border: none;
+    }
+   }
+
+   @media (max-width: 540px) {
+    .draw-container {
+        width: calc( 100vw - 32px);
+        margin: 0 auto;
+    }
+   }
+
+  </style>
+</head>
+<body>
+    <div class="whats-this">
+        <a href="" title="What's this?">?</a>
+    </div>
+  <div class="container">
+
+    <div class="draw-container">
+        <h1 id="heading">This site requires javascript.</h1>
+        <h4>Together, we're building the world's largest database of hand drawn dicks.</h4>
+        <div class="draw-box">
+            <div class="sizer"></div>
+        </div>
+        <button id="submit">Submit my dick</button>
+        <button id="share" class="light">Share my dick</button>
+    </div>
+
+
+  </div>
+
+  <script>
+   var drawing = [[1,2,0], [5,2,300]];
+
+   function b64Encode(str) {
+       return btoa(encodeURIComponent(str)
+           .replace(/%([0-9A-F]{2})/g,
+                    function toSolidBytes(match, p1) {
+                        return String.fromCharCode('0x' + p1);
+                    }));
+   }
+
+   function ready(fn) {
+       if (document.readyState != 'loading') fn();
+       else document.addEventListener('DOMContentLoaded', fn);
+   }
+
+
+   function b64Decode(str) {
+       return decodeURIComponent(atob(str).split('').map(function(c) {
+           return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+       }).join(''));
+   }
+
+   ready(function () {
+       var $_GET=[];
+       window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(a,name,value){$_GET[name]=value;});
+       if($_GET['share']);
+       /* alert(b64Decode($_GET['share']));*/
+   });
+
+   document.getElementById('share')
+           .addEventListener(
+               'click',
+               function () {
+                   alert(encodeURIComponent(b64Encode(JSON.stringify(drawing))));
+               });
+
+
+   document.getElementById('heading').innerHTML = "Please draw a dick:";
+   console.log(b64Encode('te==st'));
+  </script>
+</body>
+</html>
